@@ -72,9 +72,9 @@
                         <Insets left="5.0" />
                      </padding>
                   </GridPane>
-                  <Button layoutX="166.0" layoutY="341.0" mnemonicParsing="false" text="Novo" />
-                  <Button layoutX="226.0" layoutY="341.0" mnemonicParsing="false" text="Editar" />
-                  <Button layoutX="289.0" layoutY="341.0" mnemonicParsing="false" text="Excluir" />
+                  <Button layoutX="166.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleNova" text="Novo" />
+                  <Button layoutX="226.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleEdita" text="Editar" />
+                  <Button layoutX="289.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleExclui" text="Excluir" />
                </children>
             </AnchorPane>
         </items>

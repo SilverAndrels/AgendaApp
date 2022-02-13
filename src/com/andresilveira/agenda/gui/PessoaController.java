@@ -5,6 +5,8 @@ import com.andresilveira.agenda.model.Pessoa;
 import com.andresilveira.agenda.util.DateUtil;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,7 +27,6 @@ public class PessoaController {
 	@FXML
 	private Label rotuloDataNascimento;
 
-	@FXML
 	private Main main;
 
 	public PessoaController() {
@@ -58,5 +59,45 @@ public class PessoaController {
 			rotuloSobreNome.setText("");
 			rotuloDataNascimento.setText("");
 		}
+	}
+
+	@FXML
+	private void handleNova() {
+		Pessoa temp = new Pessoa();
+		boolean okClicked = main.mostraDialog(temp);
+		if (okClicked) {
+			main.getDados().add(temp);
+		}
+	}
+
+	@FXML
+	private void handleExclui() {
+		int selecionado = tabela.getSelectionModel().getSelectedIndex();
+		if (selecionado >= 0) {
+			tabela.getItems().remove(selecionado);
+		} else {
+			mostraAlerta();
+		}
+	}
+
+	@FXML
+	private void handleEdita() {
+		Pessoa selecionada = tabela.getSelectionModel().getSelectedItem();
+		if (selecionada != null) {
+			boolean okClicked = main.mostraDialog(selecionada);
+			if (okClicked) {
+				this.mostraDetalhe(selecionada);
+			}
+		} else {
+			mostraAlerta();
+		}
+	}
+
+	private void mostraAlerta() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Nenhuma seleção");
+		alert.setHeaderText("Nenhuma pessoa selecionada!");
+		alert.setContentText("Por favor, selecione uma pessoa!");
+		alert.showAndWait();
 	}
 }

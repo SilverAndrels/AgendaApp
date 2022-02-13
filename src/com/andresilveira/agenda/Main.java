@@ -3,6 +3,7 @@ package com.andresilveira.agenda;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import com.andresilveira.agenda.gui.EditaController;
 import com.andresilveira.agenda.gui.PessoaController;
 import com.andresilveira.agenda.model.Pessoa;
 
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -66,6 +68,34 @@ public class Main extends Application {
 			ex.printStackTrace();
 		}
 
+	}
+
+	public boolean mostraDialog(Pessoa pessoa) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main.class.getResource("gui/edita.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Edita Pessoa");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			EditaController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setPessoa(pessoa);
+
+			dialogStage.showAndWait();
+
+			return controller.isClicked();
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 
 	public static void main(String[] args) {
